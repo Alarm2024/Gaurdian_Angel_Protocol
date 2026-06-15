@@ -1,0 +1,182 @@
+trigger:
+  branches:
+    include:
+      - main
+      - master
+
+pr:
+  branches:
+    include:
+      - '*'
+
+schedules:
+  - cron: '0 3 * * *'
+    displayName: Nightly fuzz and fork readiness checks
+    branches:
+      include:
+        - main
+        - master
+    always: true
+
+variables:
+  FOUNDRY_PROFILE: default
+  FOUNDRY_FUZZ_RUNS: 256
+
+stages:
+  - stage: test
+    displayName: Test contracts
+    jobs:
+      - job: foundry_build
+        displayName: Build and format
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+            fetchDepth: 1
+
+          - bash: |
+              curl -L https://foundry.paradigm.xyz | bash
+              export PATH="$HOME/.foundry/bin:$PATH"
+              foundryup
+              forge --version
+            displayName: Install Foundry
+
+          - bash: |
+              export PATH="$HOME/.foundry/bin:$PATH"
+              forge fmt --check
+            displayName: Check Solidity formatting
+
+          - bash: |
+              export PATH="$HOME/.foundry/bin:$PATH"
+              forge build
+            displayName: Build contracts
+
+          - publish: out
+            artifact: foundry-out
+            condition: succeededOrFailed()
+            displayName: Publish build artifacts
+
+      - job: daily_limit_tests
+        displayName: Daily limit test shard
+        dependsOn: foundry_build
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+            fetchDepth: 1
+
+          - bash: |
+              curl -L https://foundry.paradigm.xyz | bash
+              export PATH="$HOME/.foundry/bin:$PATH"
+              foundryup
+              forge test --match-path 'test/DailyLimitGuard.t.sol' -vvv
+            displayName: Run DailyLimitGuard tests
+
+      - job: guardian_tests
+        displayName: Guardian integration test shard
+        dependsOn: foundry_build
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+            fetchDepth: 1
+
+          - bash: |
+              curl -L https://foundry.paradigm.xyz | bash
+              export PATH="$HOME/.foundry/bin:$PATH"
+              foundryup
+              forge test --match-path 'test/GuardianAngelDailyLimit.t.sol' -vvv
+            displayName: Run GuardianAngel tests
+
+      - job: nightly_deep_tests
+        displayName: Nightly deep checks
+        condition: eq(variables['Build.Reason'], 'Schedule')
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+            fetchDepth: 1
+
+          - bash: |
+              curl -L https://foundry.paradigm.xyz | bash
+              export PATH="$HOME/.foundry/bin:$PATH"
+              foundryup
+              FOUNDRY_FUZZ_RUNS=10000 forge test -vvv
+              forge snapshot
+            displayName: Run nightly fuzz and gas snapshot
+
+          - publish: .gas-snapshot
+            artifact: gas-snapshot
+            condition: succeededOrFailed()
+            displayName: Publish gas snapshot
+
+  - stage: deploy_sepolia_dry_run
+    displayName: Dry-run Sepolia deployment
+    dependsOn: test
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: dry_run
+        displayName: Simulate deployment
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+            fetchDepth: 1
+
+          - bash: |
+              curl -L https://foundry.paradigm.xyz | bash
+              export PATH="$HOME/.foundry/bin:$PATH"
+              foundryup
+              forge script script/DeployGuardianAngel.s.sol:DeployGuardianAngel \
+                --rpc-url "$RPC_URL"
+            displayName: Dry-run GuardianAngel deployment
+            env:
+              RPC_URL: $(SEPOLIA_RPC_URL)
+              GUARDIAN_ADDRESS: $(SEPOLIA_GUARDIAN_ADDRESS)
+              RECOVERY_ADDRESS: $(SEPOLIA_RECOVERY_ADDRESS)
+              DAILY_LIMIT_WEI: $(SEPOLIA_DAILY_LIMIT_WEI)
+
+          - publish: broadcast
+            artifact: sepolia-dry-run-broadcast
+            condition: succeededOrFailed()
+            displayName: Publish dry-run broadcast logs
+
+  - stage: deploy_sepolia
+    displayName: Deploy to Sepolia
+    dependsOn: deploy_sepolia_dry_run
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - deployment: deploy
+        displayName: Broadcast deployment
+        environment: guardian-angel-sepolia
+        pool:
+          vmImage: ubuntu-latest
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                  fetchDepth: 1
+
+                - bash: |
+                    curl -L https://foundry.paradigm.xyz | bash
+                    export PATH="$HOME/.foundry/bin:$PATH"
+                    foundryup
+                    forge script script/DeployGuardianAngel.s.sol:DeployGuardianAngel \
+                      --rpc-url "$RPC_URL" \
+                      --private-key "$DEPLOYER_PRIVATE_KEY" \
+                      --broadcast \
+                      --verify
+                  displayName: Deploy GuardianAngel
+                  env:
+                    RPC_URL: $(SEPOLIA_RPC_URL)
+                    DEPLOYER_PRIVATE_KEY: $(SEPOLIA_DEPLOYER_PRIVATE_KEY)
+                    ETHERSCAN_API_KEY: $(ETHERSCAN_API_KEY)
+                    GUARDIAN_ADDRESS: $(SEPOLIA_GUARDIAN_ADDRESS)
+                    RECOVERY_ADDRESS: $(SEPOLIA_RECOVERY_ADDRESS)
+                    DAILY_LIMIT_WEI: $(SEPOLIA_DAILY_LIMIT_WEI)
+
+                - publish: broadcast
+                  artifact: sepolia-broadcast
+                  condition: succeededOrFailed()
+                  displayName: Publish broadcast logs
