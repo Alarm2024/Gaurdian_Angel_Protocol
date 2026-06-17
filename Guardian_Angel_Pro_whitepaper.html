@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whitepaper — Guardian Angel Pro by ELGHALY COMPANY</title>
+    <style>
+        /* ─── CSS Variables ─── */
+        :root {
+            --bg-primary: #0b1a2f;
+            --bg-card: #112240;
+            --bg-card-alt: #1a2d4a;
+            --text-primary: #e6f1ff;
+            --text-secondary: #8892b0;
+            --text-accent: #64ffda;
+            --text-gold: #ffd700;
+            --border-light: #233554;
+            --shadow-card: 0 10px 30px -10px rgba(0,0,0,0.5);
+            --radius: 12px;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-mono: "SF Mono", "Fira Code", "JetBrains Mono", monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-card);
+            padding: 50px 60px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* ─── Typography ─── */
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-accent), #4db8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            margin-bottom: 0;
+        }
+
+        .header-sub {
+            font-size: 18px;
+            color: var(--text-gold);
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-accent);
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 20px;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px 30px;
+            font-size: 14px;
+            background: var(--bg-primary);
+            padding: 14px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            border-left: 3px solid var(--text-gold);
+        }
+
+        .meta span { display: flex; align-items: center; gap: 6px; }
+        .meta strong { color: var(--text-primary); }
+        .meta a { color: var(--text-accent); text-decoration: none; }
+        .meta a:hover { text-decoration: underline; }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-green { background: #1b3a2b; color: #6fcf97; }
+        .badge-blue { background: #1a2d4a; color: #7eb8ff; }
+        .badge-yellow { background: #3d2b1a; color: #ffd700; }
+        .badge-red { background: #3d1a1a; color: #ff6b6b; }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            color: var(--text-accent);
+        }
+
+        h4 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+        }
+
+        ul, ol {
+            padding-left: 28px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+        }
+
+        code {
+            background: var(--bg-primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--text-accent);
+        }
+
+        pre {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 20px 24px;
+            border-radius: var(--radius);
+            overflow-x: auto;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            line-height: 1.7;
+            margin: 20px 0;
+            border: 1px solid var(--border-light);
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: inherit;
+        }
+
+        .highlight {
+            background: var(--bg-primary);
+            border-left: 4px solid var(--text-accent);
+            padding: 16px 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .highlight p { margin-bottom: 6px; color: var(--text-secondary); }
+        .highlight strong { color: var(--text-primary); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-light);
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        th {
+            background: var(--bg-primary);
+            color: var(--text-accent);
+            font-weight: 600;
+        }
+
+        td { color: var(--text-secondary); }
+
+        .figure {
+            margin: 24px 0;
+            padding: 20px;
+            background: var(--bg-primary);
+            border-radius: var(--radius);
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+            line-height: 1.6;
+            border: 1px solid var(--border-light);
+        }
+
+        .toc {
+            background: var(--bg-primary);
+            padding: 20px 24px;
+            border-radius: var(--radius);
+            margin: 24px 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 20px;
+        }
+
+        .toc li::before { content: "▸ "; color: var(--text-accent); }
+        .toc a { color: var(--text-secondary); text-decoration: none; }
+        .toc a:hover { color: var(--text-accent); }
+
+        /* ─── Special Disclaimer Section ─── */
+        .disclaimer-section {
+            margin-top: 60px;
+            padding: 30px 35px;
+            background: #0a1628;
+            border-radius: var(--radius);
+            border: 2px solid #c9a84c;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.05);
+        }
+
+        .disclaimer-section h2 {
+            border-bottom: 2px solid #c9a84c;
+            color: var(--text-gold);
+            margin-top: 0;
+            padding-bottom: 12px;
+        }
+
+        .disclaimer-section h3 {
+            color: var(--text-gold);
+            margin-top: 24px;
+            font-size: 18px;
+            border-left: 3px solid var(--text-gold);
+            padding-left: 12px;
+        }
+
+        .disclaimer-section p, .disclaimer-section li {
+            color: #b0b8c8;
+        }
+
+        .disclaimer-section strong {
+            color: var(--text-gold);
+        }
+
+        .disclaimer-section .clause {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #2a3a5a;
+        }
+
+        .disclaimer-section .clause:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-light);
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .footer a { color: var(--text-accent); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 768px) {
+            .container { padding: 25px 20px; }
+            h1 { font-size: 30px; }
+            .toc ul { grid-template-columns: 1fr; }
+            .meta { flex-direction: column; gap: 8px; }
+            .disclaimer-section { padding: 20px; }
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; border: 1px solid #ccc; background: white; }
+            .meta, .toc, .figure, .highlight { background: #f5f5f5; }
+            .disclaimer-section { background: #f9f2e0; border-color: #999; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ─── HEADER ─── -->
+    <div class="header-sub">ELGHALY COMPANY — SECURE TECHNOLOGY DIVISION</div>
+    <h1>Guardian Angel Pro</h1>
+    <div class="subtitle">Enterprise‑Grade Asset Rescue Protocol for Solidity</div>
+
+    <div class="meta">
+        <span><strong>Provider:</strong> ELGHALY COMPANY</span>
+        <span><strong>Version:</strong> 3.0.0</span>
+        <span><strong>Status:</strong> <span class="badge badge-green">Production Ready</span></span>
+        <span><strong>License:</strong> MIT</span>
+        <span><strong>Repository:</strong> <a href="https://github.com/Alarm2024/Gaurdian_Angel_Protocol" target="_blank">github.com/Alarm2024/Gaurdian_Angel_Protocol</a></span>
+        <span><strong>Audit:</strong> <span class="badge badge-yellow">Pending</span></span>
+    </div>
+
+    <!-- ─── TOC ─── -->
+    <div class="toc">
+        <strong style="display:block; margin-bottom:8px; color:var(--text-accent);">📑 Table of Contents</strong>
+        <ul>
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#introduction">1. Introduction</a></li>
+            <li><a href="#architecture">2. Architecture</a></li>
+            <li><a href="#components">3. Core Components</a></li>
+            <li><a href="#interaction">4. Module Interaction</a></li>
+            <li><a href="#security">5. Security Model</a></li>
+            <li><a href="#roles">6. Role Capabilities</a></li>
+            <li><a href="#threats">7. Threat Mitigations</a></li>
+            <li><a href="#governance">8. Timelocked Governance</a></li>
+            <li><a href="#eip712">9. EIP‑712 Implementation</a></li>
+            <li><a href="#deployment">10. Deployment Guide</a></li>
+            <li><a href="#testing">11. Testing &amp; CI/CD</a></li>
+            <li><a href="#conclusion">12. Conclusion</a></li>
+            <li><a href="#disclaimer">⚠️ Legal Disclaimer</a></li>
+        </ul>
+    </div>
+
+    <!-- ─── CONTENT ─── -->
+
+    <h2 id="abstract">Abstract</h2>
+    <p>
+        <strong>Guardian Angel Pro</strong> is a <strong>production‑grade asset rescue and recovery framework</strong>
+        for Solidity smart contracts, developed and maintained by <strong>ELGHALY COMPANY</strong>. It provides
+        protected, auditable paths for recovering ETH, ERC20, ERC721, and ERC1155 assets from contracts during
+        security incidents, key compromise scenarios, or operational emergencies.
+    </p>
+    <p>
+        The protocol employs a <strong>defense‑in‑depth</strong> strategy through role‑based access control with strict
+        privilege separation, timelocked governance for critical parameter changes, a modular architecture for auditability
+        and extensibility, EIP‑712 typed signatures for cross‑chain replay protection, and real‑time execution limits to
+        cap exposure. All components are self‑contained with zero external dependencies, making the full trust surface
+        auditable in a single codebase.
+    </p>
+
+    <h2 id="introduction">1. Introduction</h2>
+    <p>
+        Smart contracts that hold significant value face a fundamental security challenge: they must be accessible enough
+        to perform legitimate operations, yet secure enough to prevent unauthorised access. Traditional single‑key
+        ownership models create dangerous single points of failure:
+    </p>
+    <ul>
+        <li><strong>Key Loss</strong> — Permanent asset lockout if the owner's private key is lost</li>
+        <li><strong>Key Compromise</strong> — Immediate theft of all assets if the owner's key is stolen</li>
+        <li><strong>Governance Attacks</strong> — Malicious actors can exploit single‑party control</li>
+        <li><strong>Cross‑Chain Replay</strong> — Signatures valid on one chain can be replayed on another</li>
+    </ul>
+    <p>
+        Guardian Angel Pro addresses these challenges through a <strong>multi‑role architecture</strong> that distributes
+        authority across independent actors, combined with timelocked consensus mechanisms that prevent unilateral
+        malicious actions. The protocol is designed to be <strong>self‑sovereign</strong> — the Owner retains ultimate
+        control while being protected against their own potential mistakes or compromise.
+    </p>
+
+    <h2 id="architecture">2. Architecture</h2>
+    <p>
+        Guardian Angel Pro follows a <strong>modular, hook‑based design</strong> that separates concerns into three layers.
+    </p>
+
+    <div class="figure">
+┌───────────────────────────────────────────────────────────┐
+│                      GuardianAngel                         │
+│            (Full Feature Deployment Contract)              │
+│  • Owner/Guardian roles  • Pause/Unpause                  │
+│  • Chainlink Automation  • Withdrawal paths               │
+└──────────────────┬────────────────────┬───────────────────┘
+                   │                    │
+                   ▼                    ▼
+┌─────────────────────────────────┐ ┌─────────────────────────────────┐
+│        RescueExecutor           │ │        DailyLimitGuard          │
+│      (Asset Transfer Logic)     │ │      (Per‑Asset Accounting)     │
+│  • ETH transfers                │ │  • UTC day buckets              │
+│  • ERC20 transfers              │ │  • No timestamp underflow       │
+│  • ERC721 transfers             │ │  • Automatic reset              │
+│  • ERC1155 transfers            │ │  • Zero = unlimited             │
+└─────────────────────────────────┘ └─────────────────────────────────┘
+    </div>
+
+    <h3>2.1 Design Principles</h3>
+    <ul>
+        <li><strong>Modularity</strong> — Each module is responsible for a single concern, reducing audit complexity</li>
+        <li><strong>Reusability</strong> — Core modules can be composed into any contract, not just GuardianAngel</li>
+        <li><strong>Explicit Authorization</strong> — The <code>_authorizeRescue()</code> hook forces explicit policy definition</li>
+        <li><strong>Extensibility</strong> — New policy modules can be added without rewriting underlying rescue transfers</li>
+        <li><strong>Testability</strong> — Each module can be tested in isolation, ensuring correctness</li>
+    </ul>
+
+    <h2 id="components">3. Core Components</h2>
+
+    <h3>3.1 GuardianAngel</h3>
+    <p>
+        The <strong>complete implementation</strong> with all operational policies. This contract is the authority
+        boundary in production: only the Owner configures the system, and only the Guardian executes emergency recovery
+        flows.
+    </p>
+    <p><strong>Key Responsibilities:</strong></p>
+    <ul>
+        <li>Two‑step ownership management (transfer + accept)</li>
+        <li>Guardian rotation with 24‑hour timelock and dual‑party veto</li>
+        <li>Pause/unpause controls for circuit‑breaking</li>
+        <li>Chainlink Automation support via <code>checkUpkeep</code> and <code>performUpkeep</code></li>
+        <li>ETH withdrawal paths: instant (cold signer) and timelocked (12h fallback)</li>
+        <li>Asset rescue entry points for ERC20, ERC721, and ERC1155</li>
+        <li>EIP‑2612 permit‑assisted ERC20 rescue for gas‑less user recovery</li>
+    </ul>
+
+    <h3>3.2 DailyLimitGuard</h3>
+    <p>
+        A <strong>reusable accounting module</strong> for daily spending limits per asset. Built around UTC day buckets
+        using <code>block.timestamp / 1 days</code>.
+    </p>
+    <p><strong>Security &amp; Gas Benefits:</strong></p>
+    <ul>
+        <li><strong>No timestamp subtraction underflow</strong> — compares day buckets instead of subtracting timestamps</li>
+        <li><strong>Timestamp manipulation impact is bounded</strong> — validator time drift only affects transactions near day boundaries</li>
+        <li><strong>Cheaper resets</strong> — no separate reset transaction needed; the first operation in a new bucket directly writes the new bucket and amount</li>
+        <li><strong>Zero limit = unlimited</strong> — provides flexibility for assets that should not be capped</li>
+    </ul>
+
+    <h3>3.3 RescueExecutor</h3>
+    <p>
+        A <strong>reusable transfer execution module</strong> that centralises all asset recovery logic. The module
+        delegates policy decisions to hooks rather than hardcoding authorisation or rate‑limiting rules.
+    </p>
+    <p><strong>Supported Operations:</strong></p>
+    <ul>
+        <li>Native ETH transfers</li>
+        <li>ERC20 transfers (standard and permit‑based)</li>
+        <li>ERC721 transfers</li>
+        <li>ERC1155 transfers (single and batch)</li>
+    </ul>
+    <p><strong>Security Hooks:</strong></p>
+    <ul>
+        <li><code>_authorizeRescue(address to)</code> — must be implemented to define who can rescue assets</li>
+        <li><code>_enforceDailyLimit(address asset, uint256 amount)</code> — can be overridden to apply limits</li>
+        <li>All hooks are called <em>before</em> external transfers, preserving checks‑effects‑interactions</li>
+    </ul>
+
+    <h2 id="interaction">4. Module Interaction</h2>
+
+    <h3>4.1 Inheritance Pattern</h3>
+    <p>Modular deployments are composed via inheritance and hook overrides:</p>
+
+    <pre><code>contract MyProtocol is RescueExecutor, DailyLimitGuard {
+    // Define who can rescue assets
+    function _authorizeRescue(address to) internal view override {
+        require(msg.sender == owner || msg.sender == guardian, "Unauthorized");
+    }
+
+    // Apply daily limits to all rescue operations
+    function _enforceDailyLimit(address asset, uint256 amount)
+        internal override(RescueExecutor, DailyLimitGuard)
+    {
+        DailyLimitGuard._enforceDailyLimit(asset, amount);
+    }
+}</code></pre>
+
+    <h3>4.2 Execution Flow</h3>
+    <p>The interaction flow is strictly one‑way, preserving <strong>checks‑effects‑interactions</strong>:</p>
+    <ol>
+        <li>The caller enters a rescue function exposed by <code>RescueExecutor</code></li>
+        <li><code>RescueExecutor</code> calls <code>_authorizeRescue()</code> before touching assets</li>
+        <li>For value‑bearing paths, <code>RescueExecutor</code> calls <code>_enforceDailyLimit(asset, amount)</code></li>
+        <li><code>DailyLimitGuard</code> accounts the current day bucket and reverts if the limit is exceeded</li>
+        <li>Only after authorisation and accounting pass does <code>RescueExecutor</code> perform the external transfer</li>
+    </ol>
+    <p>
+        This ensures that state updates (nonce consumption, daily spending) always precede external calls,
+        preventing reentrancy attacks and ensuring accurate accounting.
+    </p>
+
+    <h2 id="security">5. Security Model</h2>
+
+    <h3>5.1 Role‑Based Access Control</h3>
+    <p>Guardian Angel Pro implements a <strong>four‑role authorisation model</strong>:</p>
+
+    <table>
+        <thead>
+            <tr><th>Role</th><th>Capabilities</th><th>Trust Assumption</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Owner</strong></td>
+                <td>Day‑to‑day operations: withdrawals, limit management, whitelist control, rotation initiation</td>
+                <td>Hot wallet or multisig; more exposed but with safeguards</td>
+            </tr>
+            <tr>
+                <td><strong>Guardian</strong></td>
+                <td>"Break glass" role: rescues, pause/emergency sweeps, veto power over rotations</td>
+                <td>Independent key held by trusted party or institution</td>
+            </tr>
+            <tr>
+                <td><strong>Cold Signer</strong></td>
+                <td>Offline key: solely authorises <code>withdrawSecure()</code> via EIP‑712 signatures</td>
+                <td>Hardware wallet or air‑gapped device; minimal exposure</td>
+            </tr>
+            <tr>
+                <td><strong>Recovery Address</strong></td>
+                <td>Destination address: receives all rescued and swept assets</td>
+                <td>Secure cold storage or insurance fund</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>5.2 Key Security Mechanisms</h3>
+    <ul>
+        <li>
+            <strong>Two‑Step Ownership Transfer</strong> — Prevents permanent lockout by requiring the new owner to
+            accept ownership, eliminating the risk of transferring to an unreachable address.
+        </li>
+        <li>
+            <strong>24‑Hour Timelocked Rotations</strong> — All role rotations require a 24‑hour delay and can be
+            cancelled by either the Owner or Guardian during this window, preventing unilateral malicious changes.
+        </li>
+        <li>
+            <strong>EIP‑712 Typed Signatures</strong> — Signatures are bound to the specific contract address and
+            chain ID, with a typed data structure including explicit fields, nonces, and deadlines.
+        </li>
+        <li>
+            <strong>12‑Hour Timelocked Fallback</strong> — If the cold signer key is lost, the Owner can initiate a
+            withdrawal that executes after 12 hours; the Guardian can cancel during this window.
+        </li>
+        <li>
+            <strong>Daily Withdrawal Limit</strong> — Prevents large‑scale asset extraction even with a valid signature,
+            with whitelist bypass for trusted destinations.
+        </li>
+        <li>
+            <strong>Circuit Breaker</strong> — Pausing blocks all withdrawal paths and enables the Guardian's emergency
+            sweep, providing a "break glass" option during security incidents.
+        </li>
+        <li>
+            <strong>Reentrancy Protection</strong> — All state‑mutating external calls are protected by a custom
+            <code>nonReentrant</code> modifier enforcing checks‑effects‑interactions ordering.
+        </li>
+    </ul>
+
+    <h2 id="roles">6. Role Capabilities Matrix</h2>
+
+    <table>
+        <thead>
+            <tr><th>Operation</th><th>Owner</th><th>Guardian</th><th>Cold Signer</th><th>Recovery Address</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>withdrawSecure()</code></td><td>✅ Executes</td><td>❌</td><td>✅ Signs</td><td>❌</td></tr>
+            <tr><td><code>initiateWithdrawal()</code></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>executeWithdrawal()</code></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>cancelWithdrawal()</code></td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>emergencyWithdraw()</code></td><td>❌</td><td>✅</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>rescueERC20()</code></td><td>❌</td><td>✅</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>rescueERC20WithPermit()</code></td><td>❌</td><td>✅</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>rescueERC721()</code></td><td>❌</td><td>✅</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>rescueERC1155()</code></td><td>❌</td><td>✅</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>pause()</code></td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>unpause()</code></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>initiate*Rotation()</code></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>finalize*Rotation()</code></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>cancel*Rotation()</code></td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>setDailyLimit()</code></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+            <tr><td><code>setWhitelist()</code></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+        </tbody>
+    </table>
+
+    <h2 id="threats">7. Threat Mitigations</h2>
+
+    <table>
+        <thead>
+            <tr><th>Threat Vector</th><th>Mitigation</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Owner Key Compromise</td><td>Guardian can pause and sweep; cold signer independent; daily limit caps losses; rotations cancellable</td></tr>
+            <tr><td>Guardian Key Compromise</td><td>Cannot withdraw ETH alone; cannot change recovery address without Owner; cannot remove Owner's veto</td></tr>
+            <tr><td>Cold Signer Compromise</td><td>Requires Owner transaction; daily limit applies; rotatable with Guardian veto</td></tr>
+            <tr><td>Cross‑Chain Replay</td><td>EIP‑712 domain includes chainId and contract address</td></tr>
+            <tr><td>Signature Replay</td><td>Nonce consumption; deadline bounds</td></tr>
+            <tr><td>Reentrancy Attacks</td><td><code>nonReentrant</code> modifier; state updates before external calls</td></tr>
+            <tr><td>Malicious Tokens</td><td>Safe transfer wrappers validate contract existence and return values</td></tr>
+            <tr><td>DoS Attacks</td><td>No unbounded loops; all operations O(1) or bounded</td></tr>
+        </tbody>
+    </table>
+
+    <h2 id="governance">8. Timelocked Governance</h2>
+    <p>Guardian Angel Pro implements two distinct timelock mechanisms:</p>
+
+    <h3>8.1 Role Rotation Timelock (24 hours)</h3>
+    <ul>
+        <li>Applied to Guardian, Recovery Address, and Cold Signer rotations</li>
+        <li>Provides a 24‑hour observation window for the other privileged role to cancel</li>
+        <li>Prevents unilateral role changes without dual‑party consent</li>
+        <li>Cancellation can be triggered by either Owner <em>or</em> Guardian during the window</li>
+    </ul>
+
+    <h3>8.2 Withdrawal Timelock (12 hours)</h3>
+    <ul>
+        <li>Applied to the signer‑independent fallback withdrawal path</li>
+        <li>Provides Guardian oversight for Owner‑initiated withdrawals</li>
+        <li>Balances Owner access with Guardian veto power</li>
+        <li>Ensures the Owner is never permanently locked out of contract funds</li>
+    </ul>
+
+    <h2 id="eip712">9. EIP‑712 Implementation</h2>
+
+    <h3>9.1 Domain Separator</h3>
+    <pre><code>_DOMAIN_SEPARATOR = keccak256(
+    abi.encode(
+        EIP712_DOMAIN_TYPEHASH,
+        keccak256("GuardianAngel"),
+        keccak256(bytes(VERSION)),
+        block.chainid,
+        address(this)
+    )
+);</code></pre>
+
+    <h3>9.2 Withdraw Type</h3>
+    <pre><code>Withdraw(address owner, uint256 amount, uint256 nonce, uint256 deadline)</code></pre>
+
+    <h3>9.3 Verification Flow</h3>
+    <ol>
+        <li>Validate signature deadline</li>
+        <li>Compute struct hash: <code>keccak256(abi.encode(WITHDRAW_TYPEHASH, owner, amount, nonce, deadline))</code></li>
+        <li>Compute digest: <code>keccak256(abi.encodePacked("\x19\x01", _DOMAIN_SEPARATOR, structHash))</code></li>
+        <li>Recover signer from digest and signature using <code>ecrecover</code></li>
+        <li>Verify recovered address matches cold signer</li>
+    </ol>
+
+    <h3>9.4 EIP‑5267 Compliance</h3>
+    <p>
+        The contract exposes <code>eip712Domain()</code> for wallet integration, allowing users to verify the signing
+        context before approving transactions. This enables hardware wallets and dApps to render the request safely
+        for the cold signer to review.
+    </p>
+
+    <h2 id="deployment">10. Deployment Guide</h2>
+
+    <h3>10.1 Prerequisites</h3>
+    <ul>
+        <li>Foundry installed and configured</li>
+        <li>Access to an RPC endpoint (Infura, Alchemy, or local node)</li>
+        <li>Deployer wallet with sufficient ETH for gas</li>
+        <li>Etherscan API key for contract verification</li>
+    </ul>
+
+    <h3>10.2 Deployment Command</h3>
+    <pre><code>forge script script/DeployGuardianAngel.s.sol \
+    --rpc-url $RPC_URL \
+    --private-key $PRIVATE_KEY \
+    --broadcast \
+    --verify \
+    --etherscan-api-key $ETHERSCAN_API_KEY</code></pre>
+
+    <h3>10.3 Recommended Configuration</h3>
+    <table>
+        <thead>
+            <tr><th>Parameter</th><th>Recommendation</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Owner</strong></td><td>Gnosis Safe multisig (3/5 or 5/9)</td></tr>
+            <tr><td><strong>Guardian</strong></td><td>Independent security partner or institutional key</td></tr>
+            <tr><td><strong>Cold Signer</strong></td><td>Hardware wallet (Ledger/Trezor) in secure physical storage</td></tr>
+            <tr><td><strong>Recovery Address</strong></td><td>Hardware wallet in geographically separate location</td></tr>
+            <tr><td><strong>Daily Limit</strong></td><td>1‑2× expected daily operational volume</td></tr>
+        </tbody>
+    </table>
+
+    <h2 id="testing">11. Testing &amp; CI/CD</h2>
+
+    <h3>11.1 Test Suites</h3>
+    <table>
+        <thead>
+            <tr><th>Test File</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>test/DailyLimitGuard.t.sol</code></td><td>Day‑bucket accounting logic</td></tr>
+            <tr><td><code>test/GuardianAngelDailyLimit.t.sol</code></td><td>Withdrawal limit integration</td></tr>
+            <tr><td><code>test/GuardianAngel.t.sol</code></td><td>Full contract behaviour</td></tr>
+            <tr><td><code>test/RescueExecutor.t.sol</code></td><td>Asset transfer logic</td></tr>
+        </tbody>
+    </table>
+
+    <h3>11.2 Run Tests</h3>
+    <pre><code>forge test
+forge coverage
+forge snapshot</code></pre>
+
+    <h3>11.3 Azure DevOps Pipeline</h3>
+    <p>The repository includes a comprehensive Azure CI/CD pipeline with:</p>
+    <ul>
+        <li><strong>Formatting</strong> — <code>forge fmt --check</code></li>
+        <li><strong>Build</strong> — <code>forge build</code></li>
+        <li><strong>Sharded Tests</strong> — Parallel test execution for speed</li>
+        <li><strong>Scheduled Deep Checks</strong> — Weekly security scans</li>
+        <li><strong>Dry Run</strong> — Simulation of deployment</li>
+        <li><strong>Approval Gate</strong> — Manual approval required for mainnet</li>
+        <li><strong>Broadcast</strong> — Actual deployment to Sepolia/mainnet</li>
+    </ul>
+    <p>See <a href="docs/AZURE.md" style="color:var(--text-accent);">docs/AZURE.md</a> for full Azure topology and configuration.</p>
+
+    <h2 id="conclusion">12. Conclusion</h2>
+    <p>
+        Guardian Angel Pro represents a comprehensive solution to the challenge of securing digital assets in smart contracts.
+        Through its modular architecture, multi‑role authorisation, timelocked governance, and multiple independent security
+        mechanisms, it provides enterprise‑grade protection against the most common attack vectors in DeFi and asset management.
+    </p>
+    <p>
+        The protocol's emphasis on <strong>defence in depth</strong> ensures that no single point of failure can lead to
+        catastrophic asset loss. The separation of roles ensures that each actor has precisely defined, minimal necessary
+        capabilities. The transparent, auditable nature of all operations enables effective incident response and governance.
+    </p>
+    <p>
+        As the DeFi ecosystem continues to evolve, Guardian Angel Pro provides a robust foundation for secure asset
+        management that can adapt to emerging threats while maintaining the highest standards of security and transparency.
+    </p>
+
+    <div class="highlight">
+        <p><strong>Key Takeaways:</strong></p>
+        <ul>
+            <li><strong>Zero external dependencies</strong> — full trust surface auditable in a single codebase</li>
+            <li><strong>Modular design</strong> — smaller audit surface, reusable components, easier to extend</li>
+            <li><strong>Defence in depth</strong> — multiple independent security layers protect against key compromise</li>
+            <li><strong>Timelocked governance</strong> — dual‑party veto prevents unilateral malicious actions</li>
+            <li><strong>EIP‑712 signatures</strong> — domain‑separated, replay‑proof, cross‑chain safe</li>
+            <li><strong>Asset rescue</strong> — supports ETH, ERC20, ERC721, and ERC1155 with permit‑based gas‑less rescue</li>
+        </ul>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+    <!--              EXPANDED LEGAL DISCLAIMER — ELGHALY COMPANY           -->
+    <!-- ════════════════════════════════════════════════════════════════════ -->
+
+    <div class="disclaimer-section" id="disclaimer">
+        <h2>⚠️ IMPORTANT LEGAL DISCLAIMER</h2>
+        <p style="font-weight: 300; margin-bottom: 20px; color: #b0b8c8;">
+            <strong>PLEASE READ CAREFULLY.</strong> This disclaimer applies to the Guardian Angel Pro protocol, its
+            associated software, documentation, and any tokens, rewards, or other digital assets that may be distributed
+            or used in connection with the protocol (collectively, the “<strong>Protocol</strong>”), which is
+            developed, operated, and maintained by <strong>ELGHALY COMPANY</strong> (the “<strong>Company</strong>”).
+            By accessing, using, or interacting with the Protocol in any manner, you acknowledge and agree to all terms
+            stated herein. If you do not agree, you must not use the Protocol.
+        </p>
+
+        <div class="clause">
+            <h3>1. UTILITY TOKEN CHARACTERISATION — NOT A SECURITY</h3>
+            <p>
+                Any tokens, points, rewards, or similar digital units that may be issued, distributed, or earned
+                through the Protocol (the “<strong>GA Token</strong>”) are designed <strong>solely as a non‑financial
+                utility token</strong> intended to incentivise active security participation, governance decisions,
+                and other functional contributions to the Protocol's ecosystem. <strong>ELGHALY COMPANY</strong>
+                expressly states that the GA Token:
+            </p>
+            <ul>
+                <li>Is <strong>not</strong> an investment contract, stock, bond, security, commodity, derivative,
+                    or any other type of financial instrument under the laws of any jurisdiction, including but
+                    not limited to the United States Securities Act of 1933, the Securities Exchange Act of 1934,
+                    the European Union's Markets in Crypto‑Assets Regulation (MiCA), or any similar regional or
+                    national framework.</li>
+                <li>Confers <strong>no ownership, equity, or profit‑sharing rights</strong> in ELGHALY COMPANY,
+                    its affiliates, or any related entity.</li>
+                <li>Provides <strong>no promise or expectation of profit, dividends, interest, or other financial
+                    return</strong> from the efforts of the Company or any third party.</li>
+                <li>Is intended for <strong>functional use only</strong> within the Protocol's ecosystem, such as
+                    participating in on‑chain governance, accessing premium features, or receiving discounts on
+                    future services offered by ELGHALY COMPANY.</li>
+            </ul>
+            <p>
+                You acknowledge that the value, if any, of the GA Token is determined solely by market forces and
+                user adoption, and you assume full responsibility for any decision to acquire, hold, or transfer
+                the GA Token. <strong>ELGHALY COMPANY does not guarantee any liquidity, price stability, or market
+                for the GA Token</strong>.
+            </p>
+        </div>
+
+        <div class="clause">
+            <h3>2. REGULATORY COMPLIANCE &amp; SAFE HARBOURS</h3>
+            <p>
+                The Protocol is a <strong>decentralised, open‑source software project</strong> that operates on
+                public blockchain networks. <strong>ELGHALY COMPANY</strong> acts solely as a <strong>technology
+                provider</strong> and does not provide any financial, legal, investment, or tax advice. The Protocol
+                is not subject to regulation as a bank, financial intermediary, money services business, or similar
+                entity under existing laws.
+            </p>
+            <p>
+                ELGHALY COMPANY is not registered with any financial regulatory authority and does not offer any
+                regulated financial products or services. The Protocol is provided for <strong>informational and
+                technological</strong> purposes only.
+            </p>
+            <p>
+                ELGHALY COMPANY relies upon all applicable <strong>technology safe harbour guidelines</strong> and
+                <strong>open‑source software exemptions</strong> provided under relevant laws, including but not
+                limited to those applicable to the provision of non‑custodial software tools, decentralised
+                applications, and smart contract protocols. Nothing in this disclaimer or any associated
+                documentation shall be construed as creating a joint venture, partnership, agency, or fiduciary
+                relationship between you and ELGHALY COMPANY.
+            </p>
+        </div>
+
+        <div class="clause">
+            <h3>3. TECHNICAL, SMART CONTRACT &amp; HARDWARE RISKS</h3>
+            <p>
+                <strong>NO WARRANTY</strong> is given by <strong>ELGHALY COMPANY</strong> or any developer that the
+                Protocol will be error‑free, secure, uninterrupted, or free from vulnerabilities, including but not
+                limited to:
+            </p>
+            <ul>
+                <li><strong>Smart contract bugs</strong> — logical errors, reentrancy, integer over/underflows,
+                    or other programming flaws that may lead to loss of assets or data.</li>
+                <li><strong>Software exploits</strong> — attacks on the underlying blockchain, consensus mechanisms,
+                    or third‑party dependencies (e.g., oracles, front‑ends, wallet software).</li>
+                <li><strong>Hardware failures</strong> — sensor errors, IoT device malfunctions, or physical damage
+                    to any hardware component used in data collection or verification.</li>
+                <li><strong>Network disruptions</strong> — dropped internet connections, blockchain congestion,
+                    or delays in transaction finality.</li>
+            </ul>
+            <p>
+                You are solely responsible for implementing adequate security measures (e.g., hardware wallets,
+                multisig configurations, backup procedures) and for verifying the correctness of any transaction
+                you initiate. <strong>ELGHALY COMPANY</strong> and its developers are not liable for any losses or
+                damages resulting from your use of the Protocol, including those arising from unauthorised access,
+                phishing attacks, or human error.
+            </p>
+        </div>
+
+        <div class="clause">
+            <h3>4. DECENTRALIZED DATA &amp; ORACLE LIABILITY</h3>
+            <p>
+                The Protocol may incorporate or rely upon automated data parsing, security analytical models, and
+                third‑party data feeds or price oracles. <strong>These systems are provided “as‑is” and without any
+                guarantee of accuracy, reliability, or timeliness.</strong>
+            </p>
+            <p>
+                <strong>ELGHALY COMPANY</strong> expressly disclaims liability for:
+            </p>
+            <ul>
+                <li><strong>System misclassifications</strong> — incorrect labelling, detection, or filtering of
+                    transaction threat vectors or anomalous interactions.</li>
+                <li><strong>Model errors</strong> — inherent analytical bugs, stale contract state assumptions, or
+                    execution latency that may produce suboptimal response timings.</li>
+                <li><strong>Oracle inaccuracies</strong> — stale, incorrect, or manipulated price or state data from
+                    external sources (e.g., decentralised data feeds, AMM pools, or external oracles).</li>
+                <li><strong>Data transmission dropouts</strong> — loss, delay, or corruption of block data during
+                    transmission from public RPC endpoints or node infrastructure.</li>
+            </ul>
+            <p>
+                You assume all risks associated with the use of protocol‑derived insights and oracle‑provided data,
+                and you agree that <strong>ELGHALY COMPANY</strong> is not responsible for any decisions or actions
+                taken based on such information.
+            </p>
+        </div>
+
+        <div class="clause">
+            <h3>5. “AS‑IS” AND FORWARD‑LOOKING STATEMENTS</h3>
+            <p>
+                <strong>ALL SOFTWARE, DOCUMENTATION, AND OTHER MATERIALS ARE PROVIDED “AS‑IS” AND “AS AVAILABLE”</strong>
+                without any warranty of any kind, whether express, implied, or statutory, including but not limited
+                to warranties of merchantability, fitness for a particular purpose, title, non‑infringement, or
+                security. No oral or written information or advice given by <strong>ELGHALY COMPANY</strong> or any
+                developer shall create any warranty not expressly stated herein.
+            </p>
+            <p>
+                This whitepaper and any associated marketing materials may contain <strong>forward‑looking
+                statements</strong> regarding the Protocol's development, security performance, risk mitigation goals,
+                asset protection metrics, and other functional milestones. These statements are based on current
+                assumptions, models, and projections, and they are <strong>subject to significant uncertainties
+                and risks</strong>. Actual results may differ materially from those expressed or implied.
+                Factors that could cause differences include, but are not limited to, technological challenges,
+                changes in regulatory or market conditions, competition, and the availability of funding or
+                partnerships.
+            </p>
+            <p>
+                <strong>ELGHALY COMPANY</strong> undertakes no obligation to update or revise any forward‑looking
+                statements to reflect events or circumstances after the date of publication.
+            </p>
+        </div>
+
+        <div class="clause">
+            <h3>6. ABSOLUTE LIMITATION OF LIABILITY</h3>
+            <p>
+                <strong>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL ELGHALY COMPANY,
+                ITS AFFILIATES, DIRECTORS, OFFICERS, EMPLOYEES, AGENTS, OR DEVELOPERS BE LIABLE FOR ANY DIRECT,
+                INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL, OR PUNITIVE DAMAGES</strong> arising
+                out of or in connection with:
+            </p>
+            <ul>
+                <li>the use or inability to use the Protocol;</li>
+                <li>any loss of data, assets, or business opportunities;</li>
+                <li>any unauthorised access to or alteration of your data or wallets;</li>
+                <li>any errors, bugs, or security vulnerabilities in the software;</li>
+                <li>any third‑party claims, actions, or demands;</li>
+                <li>any loss of goodwill, reputation, or anticipated savings;</li>
+                <li>any personal injury, death, or damage to tangible property;</li>
+                <li>any other damages, even if advised of the possibility of such damages.</li>
+            </ul>
+            <p>
+                <strong>In jurisdictions that do not allow the exclusion or limitation of liability for certain
+                damages, ELGHALY COMPANY's liability is limited to the fullest extent permitted by law.</strong>
+                In any case, ELGHALY COMPANY's total aggregate liability shall not exceed the amount of fees paid
+                by you to ELGHALY COMPANY, if any, for access to the Protocol in the twelve (12) months preceding
+                the event giving rise to the claim.
+            </p>
+            <p>
+                This limitation of liability is a fundamental part of the bargain between you and ELGHALY COMPANY
+                and shall apply regardless of the failure of any exclusive remedy.
+            </p>
+        </div>
+
+        <p style="margin-top: 24px; font-size: 15px; color: #8892b0;">
+            <strong>GOVERNING LAW &amp; JURISDICTION:</strong> This disclaimer and any disputes arising from or
+            relating to the Protocol shall be governed by and construed in accordance with the laws of
+            <strong>England and Wales</strong>, without regard to conflict of law principles. Any legal action
+            or proceeding shall be brought exclusively in the courts of <strong>London, United Kingdom</strong>.
+            You irrevocably consent to the jurisdiction and venue of such courts.
+        </p>
+
+        <p style="margin-top: 16px; font-size: 14px; color: #8892b0;">
+            <strong>Last Updated:</strong> 17 June 2026 &nbsp;·&nbsp; <strong>Version:</strong> 3.0.0
+        </p>
+
+        <p style="margin-top: 12px; font-size: 13px; color: #4a5a7a; text-align: center; border-top: 1px solid #2a3a5a; padding-top: 16px;">
+            © 2026 <strong>ELGHALY COMPANY</strong>. All rights reserved.
+        </p>
+    </div>
+
+    <!-- ─── FOOTER ─── -->
+    <div class="footer">
+        <p><strong>Guardian Angel Pro</strong> — Next‑Gen Automated Safety Layer for Solidity</p>
+        <p>
+            Developed &amp; Operated by <strong style="color:var(--text-gold);">ELGHALY COMPANY</strong>
+        </p>
+        <p>
+            <a href="https://github.com/Alarm2024/Gaurdian_Angel_Protocol" target="_blank">github.com/Alarm2024/Gaurdian_Angel_Protocol</a>
+            &nbsp;·&nbsp;
+            <a href="https://docs.guardianangel.io" target="_blank">docs.guardianangel.io</a>
+        </p>
+        <p style="margin-top:8px; font-size:13px; color:#4a5a7a;">
+            Version 3.0.0 &nbsp;·&nbsp; MIT License &nbsp;·&nbsp; Built by <strong style="color:var(--text-gold);">ELGHALY COMPANY</strong> with ❤️ for the DeFi community
+        </p>
+    </div>
+
+</div> <!-- /container -->
+</body>
+</html>
